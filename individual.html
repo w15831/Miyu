@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>單題頁 - 只醉今謎</title>
+</head>
+<body>
+  <div id="riddle"></div>
+  <input type="text" id="answerInput" placeholder="請輸入答案">
+  <button onclick="checkAnswer()">送出</button>
+  <div>
+    <a href="list.html">📜 回列表</a>
+    <a href="index.html">🏠 回首頁</a>
+    <a id="hint1">💡 提示1</a>
+    <a id="hint2">💡 提示2</a>
+  </div>
+  <script>
+    const url = new URL(location.href);
+    const id = +url.searchParams.get('no');
+    fetch('只醉今謎.json')
+      .then(res => res.json())
+      .then(data => {
+        const riddle = data.find(r => r.id === id);
+        if (!riddle) return;
+        document.getElementById('riddle').textContent = riddle.riddle;
+        document.getElementById('hint1').href = `hint1.html?no=${id}`;
+        document.getElementById('hint2').href = `hint2.html?no=${id}`;
+        localStorage.setItem(`views-${id}`, +localStorage.getItem(`views-${id}`) + 1 || 1);
+      });
+    function checkAnswer() {
+      const input = document.getElementById('answerInput').value.trim();
+      fetch('只醉今謎.json')
+        .then(res => res.json())
+        .then(data => {
+          const riddle = data.find(r => r.id === id);
+          if (!riddle) return;
+          if (riddle.acceptableAnswers.includes(input)) {
+            localStorage.setItem(`corrects-${id}`, +localStorage.getItem(`corrects-${id}`) + 1 || 1);
+            location.href = `success.html?no=${id}`;
+          } else {
+            location.href = `fail.html?no=${id}`;
+          }
+        });
+    }
+  </script>
+</body>
+</html>

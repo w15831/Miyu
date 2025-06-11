@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>題目列表 - 只醉今謎</title>
+  <style>
+    body { font-family: sans-serif; background: #fffde7; padding: 1em; }
+    .riddle { padding: 0.5em; border-bottom: 1px solid #ccc; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>題目列表</h2>
+  <div id="riddleList"></div>
+  <script>
+    fetch('只醉今謎.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('riddleList');
+        data.forEach(r => {
+          const div = document.createElement('div');
+          div.className = 'riddle';
+          div.textContent = `#${r.id} ${r.riddle.slice(0, 10)}... ｜閱：${r.views}｜對：${r.corrects}`;
+          div.onclick = () => location.href = `individual.html?no=${r.id}`;
+          container.appendChild(div);
+        });
+      });
+  </script>
+</body>
+</html>
