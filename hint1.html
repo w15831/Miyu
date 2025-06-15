@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>提示</title>
+  <script type="module">
+    const id = new URLSearchParams(location.search).get('no');
+    fetch('只醉今謎.json')
+      .then(res => res.json())
+      .then(data => {
+        const r = data.find(item => item.id == id);
+        document.getElementById('riddle').innerHTML = r.riddle.replace(/\n/g, '<br>');
+        document.getElementById('hint').textContent = r.hint1;
+        document.getElementById('back').href = `individual.html?no=${id}`;
+      });
+  </script>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1em;
+      text-align: center;
+      font-size: 20px;
+    }
+    #riddle {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 1em;
+    }
+    #hint {
+      font-size: 22px;
+      margin-bottom: 2em;
+    }
+    a {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div id="riddle">載入中...</div>
+  <div id="hint"></div>
+  <a id="back">🔙 回題目</a>
+</body>
+</html>

@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>單題頁 - 只醉今謎</title>
+  <script type="module" src="firebase.js"></script>
+  <script type="module">
+    import { incrementViews, incrementCorrects } from './firebase.js';
+
+    const id = +new URLSearchParams(location.search).get('no');
+    let currentRiddle = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const res = await fetch('只醉今謎.json');
+      const data = await res.json();
+      currentRiddle = data.find(r => r.id === id);
+      if (!currentRiddle) {
+        document.getElementById('riddle').textContent = '找不到題目';
+        return;
+      }
+
+      document.getElementById('riddle').innerHTML = currentRiddle.riddle.replace(/\n/g, '<br>');
+      document.getElementById('hint1').href = `hint1.html?no=${id}`;
+      document.getElementById('hint2').href = `hint2.html?no=${id}`;
+
+      await incrementViews(id);
+    });
+
+    window.checkAnswer = () => {
+      const input = document.getElementById('answerInput').value.trim();
+      if (!currentRiddle) return;
+      const answers = currentRiddle.acceptableAnswers.map(a => a.trim());
+      if (answers.includes(input)) {
+        incrementCorrects(id);
+        location.href = `success.html?no=${id}`;
+      } else {
+        location.href = `fail.html?no=${id}`;
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #fefefe;
+      margin: 0;
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      font-size: 20px;
+    }
+    #riddle {
+      margin: 1em 0;
+      font-weight: bold;
+      font-size: 24px;
+      max-width: 80%;
+    }
+    input {
+      font-size: 18px;
+      padding: 0.5em;
+      width: 60%;
+    }
+    button {
+      font-size: 18px;
+      padding: 0.5em 1em;
+      margin-top: 1em;
+    }
+    .nav {
+      margin-top: 1.5em;
+    }
+    .nav a {
+      margin: 0 0.5em;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="riddle">載入中...</div>
+  <input type="text" id="answerInput" placeholder="請輸入答案">
+  <br>
+  <button onclick="checkAnswer()">送出</button>
+  <div class="nav">
+    <a href="list.html">📜 回列表</a>
+    <a href="index.html">🏠 回首頁</a>
+    <a id="hint1">💡 提示1</a>
+    <a id="hint2">💡 提示2</a>
+  </div>
+</body>
+</html>

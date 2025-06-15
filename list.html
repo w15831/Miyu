@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>題目列表 - 只醉今謎</title>
+  <script type="module" src="firebase.js"></script>
+  <script type="module">
+    import { getStats } from './firebase.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const container = document.getElementById('riddleList');
+      const res = await fetch('只醉今謎.json');
+      const data = await res.json();
+
+      for (const r of data) {
+        const stats = await getStats(r.id);
+        const div = document.createElement('div');
+        div.className = 'riddle';
+        div.textContent = `#${r.id} ${r.riddle.slice(0, 10).replace(/\n/g, '')}... ｜閱：${stats.views}｜對：${stats.corrects}`;
+        div.onclick = () => location.href = `individual.html?no=${r.id}`;
+        container.appendChild(div);
+      }
+    });
+  </script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fffde7;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      font-size: 20px;
+    }
+    .riddle {
+      padding: 0.7em;
+      border-bottom: 1px solid #ccc;
+      width: 90%;
+      max-width: 600px;
+      cursor: pointer;
+    }
+    h2 {
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+  <h2>題目列表</h2>
+  <div id="riddleList"></div>
+</body>
+</html>

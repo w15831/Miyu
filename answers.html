@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>謎底與解析</title>
+  <script type="module">
+    const id = new URLSearchParams(location.search).get('no');
+    fetch('只醉今謎.json')
+      .then(res => res.json())
+      .then(data => {
+        const r = data.find(item => item.id == id);
+        document.getElementById('answer').innerHTML = `<h2>謎底：</h2><p>${r.answer}</p>`;
+        document.getElementById('explanation').innerHTML = `<h2>解析：</h2><p>${r.explanation.replace(/\\n/g, '<br>')}</p>`;
+      });
+  </script>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1em;
+      text-align: center;
+      font-size: 20px;
+    }
+    h2 {
+      font-size: 26px;
+      margin: 0.5em 0 0.2em;
+    }
+    p {
+      font-size: 22px;
+      margin: 0.2em 0 1em;
+      max-width: 90%;
+    }
+    a {
+      font-size: 18px;
+      margin-top: 2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="answer">載入中...</div>
+  <div id="explanation"></div>
+  <a href="index.html">🏠 回首頁</a>
+</body>
+</html>
