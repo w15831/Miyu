@@ -476,17 +476,4 @@
     "views": 0,
     "corrects": 0
   },
-  {
-    "id": 35,
-    "riddle": "nan",
-    "hint1": "nan",
-    "hint2": "nan",
-    "answer": "nan",
-    "acceptableAnswers": [
-      "nan"
-    ],
-    "explanation": "nan",
-    "views": 0,
-    "corrects": 0
-  }
 ]
