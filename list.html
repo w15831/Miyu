@@ -10,7 +10,7 @@
 
     document.addEventListener('DOMContentLoaded', async () => {
       const container = document.getElementById('riddleList');
-      const res = await fetch('只醉今謎.json');
+      const res = await fetch('https://w15831.github.io/Miyu/只醉今謎.json');
       const data = await res.json();
 
       for (const r of data) {
