@@ -20,7 +20,7 @@
         return;
       }
 
-      document.getElementById('riddle').innerHTML = currentRiddle.riddle.replace(/\n/g, '<br>');
+      document.getElementById('riddle').innerHTML = currentRiddle.riddle.replace(/\\n/g, '<br>');
       document.getElementById('hint1').href = `hint1.html?no=${id}`;
       document.getElementById('hint2').href = `hint2.html?no=${id}`;
 
