@@ -6,22 +6,31 @@
   <title>題目列表 - 只醉今謎</title>
   <script type="module" src="firebase.js"></script>
   <script type="module">
-    import { getStats } from './firebase.js';
+import { getStats } from './firebase.js';
 
-    document.addEventListener('DOMContentLoaded', async () => {
-      const container = document.getElementById('riddleList');
-      const res = await fetch('https://w15831.github.io/Miyu/只醉今謎.json');
-      const data = await res.json();
+document.addEventListener('DOMContentLoaded', async () => {
+  const container = document.getElementById('riddleList');
+  try {
+    const res = await fetch('./只醉今謎.json');
+    const data = await res.json();
+    console.log("✅ 資料載入成功：", data);
 
-      for (const r of data) {
-        const stats = await getStats(r.id);
-        const div = document.createElement('div');
-        div.className = 'riddle';
-        div.textContent = `#${r.id} ${r.riddle.slice(0, 10).replace(/\n/g, '')}... ｜閱：${stats.views}｜對：${stats.corrects}`;
-        div.onclick = () => location.href = `individual.html?no=${r.id}`;
-        container.appendChild(div);
-      }
-    });
+    for (const r of data) {
+      console.log("處理題目：", r);
+      const stats = await getStats(r.id);
+      console.log("取得 stats：", stats);
+
+      const div = document.createElement('div');
+      div.className = 'riddle';
+      div.textContent = `#${r.id} ${r.riddle.slice(0, 10).replace(/\n/g, '')}... ｜閱：${stats.views}｜對：${stats.corrects}`;
+      div.onclick = () => location.href = `individual.html?no=${r.id}`;
+      container.appendChild(div);
+    }
+  } catch (error) {
+    console.error("❌ 發生錯誤：", error);
+    container.innerHTML = '<p>載入題目發生錯誤，請檢查主控台訊息。</p>';
+  }
+});
   </script>
   <style>
     body {
