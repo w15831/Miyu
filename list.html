@@ -19,12 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log("處理題目：", r);
       const stats = await getStats(r.id);
       console.log("取得 stats：", stats);
-
-      const div = document.createElement('div');
-      div.className = 'riddle';
-      div.innerHTML = `#${r.id} ${r.riddle.slice(0, 10).replace(/\\n/g, '<br>')}... ｜閱：${stats.views}｜對：${stats.corrects}`;
-      div.onclick = () => location.href = `individual.html?no=${r.id}`;
-      container.appendChild(div);
     }
   } catch (error) {
     console.error("❌ 發生錯誤：", error);
