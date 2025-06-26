@@ -87,7 +87,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           const tdRiddle = document.createElement('td');
           tdRiddle.textContent = `${r.riddle.replace(/\\n/g, '').slice(0, 20)}...`;
-
+          tdRiddle.style.width = '300px';
+          tdRiddle.style.whiteSpace = 'nowrap';
+          tdRiddle.style.overflow = 'hidden';
+          tdRiddle.style.textOverflow = 'ellipsis';
           const tdViews = document.createElement('td');
           tdViews.textContent = stats.views;
 
