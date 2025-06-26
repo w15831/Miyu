@@ -10,7 +10,6 @@
       .then(res => res.json())
       .then(data => {
         const r = data.find(item => item.id == id);
-        document.getElementById('riddle').innerHTML = r.riddle.replace(/\n/g, '<br>');
         document.getElementById('hint').textContent = r.hint1;
         document.getElementById('back').href = `individual.html?no=${id}`;
       });
