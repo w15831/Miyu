@@ -9,8 +9,7 @@
     fetch('只醉今謎.json')
       .then(res => res.json())
       .then(data => {
-        const r = data.find(item => item.id == id);
-        document.getElementById('riddle').innerHTML = r.riddle.replace(/\n/g, '<br>');
+        const r = data.find(item => item.id == id);        
         document.getElementById('hint').textContent = r.hint2;
         document.getElementById('back').href = `individual.html?no=${id}`;
       });
