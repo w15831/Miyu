@@ -60,6 +60,94 @@ document.addEventListener('DOMContentLoaded', async () => {
 </head>
 <body>
   <h2>題目列表</h2>
-  <div id="riddleList"></div>
+  <table id="riddleListTable">
+    <thead>
+      <tr>
+        <th>題號</th>
+        <th>謎面預覽</th>
+        <th>閱覽次數</th>
+        <th>答對次數</th>
+      </tr>
+    </thead>
+    <tbody id="riddleList"></tbody>
+  </table>
+
+  <script type="module">
+    import { getStats } from './firebase.js';
+    document.addEventListener('DOMContentLoaded', async () => {
+      const tableBody = document.getElementById('riddleList');
+      try {
+        const res = await fetch('./只醉今謎.json');
+        const data = await res.json();
+        console.log("✅ 資料載入成功：", data);
+
+        for (const r of data) {
+          console.log("處理題目：", r);
+          const stats = await getStats(r.id);
+          console.log("取得 stats：", stats);
+
+          const tr = document.createElement('tr');
+
+          const tdId = document.createElement('td');
+          tdId.textContent = r.id;
+
+          const tdRiddle = document.createElement('td');
+          tdRiddle.innerHTML = `${r.riddle.slice(0, 30).replace(/\n/g, '<br>')}...`;
+
+          const tdViews = document.createElement('td');
+          tdViews.textContent = stats.views;
+
+          const tdCorrects = document.createElement('td');
+          tdCorrects.textContent = stats.corrects;
+
+          tr.appendChild(tdId);
+          tr.appendChild(tdRiddle);
+          tr.appendChild(tdViews);
+          tr.appendChild(tdCorrects);
+
+          tr.onclick = () => location.href = `individual.html?no=${r.id}`;
+          
+          tableBody.appendChild(tr);
+        }
+      } catch (error) {
+        console.error("❌ 發生錯誤：", error);
+        tableBody.innerHTML = '<tr><td colspan="4">載入題目發生錯誤，請檢查主控台訊息。</td></tr>';
+      }
+    });
+  </script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #fffde7;
+      margin: 0;
+      padding: 2em;
+      text-align: center;
+      font-size: 18px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 900px;
+      margin: 1em auto;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 0.5em;
+      text-align: left;
+    }
+    th {
+      background: #f9f9f9;
+    }
+    tr:hover {
+      background: #ffeecf;
+      cursor: pointer;
+    }
+    h2 {
+      margin-top: 1em;
+    }
+  </style>
 </body>
 </html>
