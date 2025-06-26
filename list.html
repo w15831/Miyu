@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           tdId.textContent = r.id;
 
           const tdRiddle = document.createElement('td');
-          tdRiddle.innerHTML = `${r.riddle.slice(0, 30).replace(/\n/g, '<br>')}...`;
+          tdRiddle.textContent = `${r.riddle.replace(/\\n/g, '').slice(0, 20)}...`;
 
           const tdViews = document.createElement('td');
           tdViews.textContent = stats.views;
