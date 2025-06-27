@@ -29,22 +29,15 @@
   <h2>❌ 不對哦，再試一次！</h2>
   <!-- 修改後：先放一個沒有指定連結的 a 標籤 -->
 <a id="answerLink" href="#">看謎底與解析</a>
+<a id="backLink" href="#">🔙 回題目</a>
 
-<!-- 再用 JavaScript 補上正確的連結 -->
 <script>
   const no = new URLSearchParams(window.location.search).get('no');
   if (no) {
-    const answerLink = document.getElementById('answerLink');
-    answerLink.href = `answer.html?no=${no}`;
-  }
-</script>
-  
-<a id="backLink" href="#">🔙 回題目</a>
-<script>
-  const no = new URLSearchParams(location.search).get('no');
-  if (no) {
+    document.getElementById('answerLink').href = `answer.html?no=${no}`;
     document.getElementById('backLink').href = `individual.html?no=${no}`;
   }
 </script>
+ 
 </body>
 </html>
