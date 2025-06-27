@@ -131,20 +131,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     table, th, td {
       border: 1px solid #ccc;
     }
-    th, td {
-      padding: 0.5em;
-      text-align: left;
-    }
-    th {
-      background: #f9f9f9;
-    }
-    tr:hover {
-      background: #ffeecf;
-      cursor: pointer;
-    }
-    h2 {
-      margin-top: 1em;
-    }
+  th {
+    padding: 0.5em;
+    text-align: center; /* 表頭居中 */
+    background: #f9f9f9;
+  }
+  td {
+    padding: 0.5em;
+  }
+  /* 題號、次數類資料靠右 */
+  td:nth-child(1),
+  td:nth-child(3),
+  td:nth-child(4) {
+    text-align: right;
+  }
+  /* 謎面欄位預覽，限定寬度並以省略號處理 */
+  td:nth-child(2) {
+    text-align: left;
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  tr:hover {
+    background: #ffeecf;
+    cursor: pointer;
+  }
   </style>
 </body>
 </html>
