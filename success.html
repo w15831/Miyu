@@ -27,13 +27,15 @@
 </head>
 <body>
   <h2>🎉 恭喜！答對了！</h2>
-  <a href="answer.html?no=<script>document.write(new URLSearchParams(location.search).get('no'))</script>">✅ 看謎底與解析</a>
-　<a href="index.html">🏠 回首頁</a>
+<a id="answerLink" href="#">✅ 看謎底與解析</a>
+<a href="index.html">🏠 回首頁</a>
+
 <script>
   const no = new URLSearchParams(location.search).get('no');
   if (no) {
-    document.getElementById('backLink').href = `individual.html?no=${no}`;
+    document.getElementById('answerLink').href = `answer.html?no=${no}`;
   }
 </script>
+
 </body>
 </html>
