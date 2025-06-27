@@ -14,12 +14,28 @@
       });
   </script>
   <style>
-    body {
+body {
   font-family: sans-serif;
-  margin: 2em 10%;
-  font-size: 20px;
-  line-height: 1.6;
+  margin: 0;
+  padding: 2em 0;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
   text-align: left;
+  line-height: 1.6;
+  font-size: 20px;
+}
+
+/* 電腦螢幕以上再增加左右邊距 */
+@media (min-width: 768px) {
+  .container {
+    margin-left: 3em;
+    margin-right: 3em;
+  }
 }
 
 h2 {
