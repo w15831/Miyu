@@ -155,6 +155,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+    /* 第3欄：閱覽次數、第4欄：答對次數 */
+td:nth-child(3),
+td:nth-child(4),
+th:nth-child(3),
+th:nth-child(4) {
+  width: 80px;        /* 根據需要可改成更窄如 70px */
+  text-align: left;
+  white-space: nowrap;
+}
+
   tr:hover {
     background: #ffeecf;
     cursor: pointer;
