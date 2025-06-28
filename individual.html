@@ -12,6 +12,9 @@
     let currentRiddle = null;
 
     document.addEventListener('DOMContentLoaded', async () => {
+      const no = new URLSearchParams(location.search).get('no');
+      document.getElementById('riddleId').textContent = `#${no}`;
+
       const res = await fetch('只醉今謎.json');
       const data = await res.json();
       currentRiddle = data.find(r => r.id === id);
@@ -79,6 +82,7 @@
   </style>
 </head>
 <body>
+  <div id="riddleId" style="font-size: 24px; font-weight: bold; margin-bottom: 1em;"></div>
   <div id="riddle">載入中...</div>
   <input type="text" id="answerInput" placeholder="請輸入答案">
   <br>
