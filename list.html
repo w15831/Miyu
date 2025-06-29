@@ -79,8 +79,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         for (const r of data) {
           console.log("處理題目：", r);
-          await incrementViews(r.id); // 自動補建統計資料
-          const stats = await getStats(r.id); // 讀取最新資料
+          let stats = { views: '-', corrects: '-' };
+try {
+  await incrementViews(r.id);
+  stats = await getStats(r.id);
+} catch (e) {
+  console.warn(`無法取得第 ${r.id} 題的統計資料：${e.message}`);
+}
           console.log("取得 stats：", stats);
 
           const tr = document.createElement('tr');
