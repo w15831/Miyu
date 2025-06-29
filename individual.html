@@ -8,7 +8,7 @@
   <script type="module">
     import { incrementViews, incrementCorrects } from './firebase.js';
 
-    const id = +new URLSearchParams(location.search).get('no');
+    const id = Number(new URLSearchParams(location.search).get('no'));
     let currentRiddle = null;
 
     document.addEventListener('DOMContentLoaded', async () => {
@@ -34,8 +34,8 @@
       const input = document.getElementById('answerInput').value.trim();
       if (!currentRiddle) return;
       const answers = currentRiddle.acceptableAnswers.map(a => a.trim());
-      if (answers.includes(input)) {
-        incrementCorrects(id);
+     if (answers.includes(input)) {
+     if (!isNaN(id)) incrementCorrects(id);
         location.href = `success.html?no=${id}`;
       } else {
         location.href = `fail.html?no=${id}`;
