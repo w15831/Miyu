@@ -30,25 +30,35 @@ export async function getStats(id) {
     return snap.data();
   } catch (e) {
     console.warn(`取得統計資料失敗：${e.message}`);
-    return { views: "-", corrects: "-" };  // 顯示為 "-" 表示無法讀取
+    return { views: "-", corrects: "-" };
   }
 }
 
-// 公開函式：統計增加一次 views
+// 公開函式：統計增加一次 views，若尚未存在則自動建立
 export async function incrementViews(id) {
   try {
     const ref = doc(db, "riddles", id.toString());
-    await updateDoc(ref, { views: increment(1) });
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+      await setDoc(ref, { views: 1, corrects: 0 });
+    } else {
+      await updateDoc(ref, { views: increment(1) });
+    }
   } catch (e) {
     console.warn(`views 增加失敗：${e.message}`);
   }
 }
 
-// 公開函式：統計增加一次 corrects
+// 公開函式：統計增加一次 corrects，若尚未存在則自動建立
 export async function incrementCorrects(id) {
   try {
     const ref = doc(db, "riddles", id.toString());
-    await updateDoc(ref, { corrects: increment(1) });
+    const snap = await getDoc(ref);
+    if (!snap.exists()) {
+      await setDoc(ref, { views: 0, corrects: 1 });
+    } else {
+      await updateDoc(ref, { corrects: increment(1) });
+    }
   } catch (e) {
     console.warn(`corrects 增加失敗：${e.message}`);
   }
