@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   <a href="index.html">🏠 回首頁</a>
   
   <script type="module">
-    import { getStats } from './firebase.js';
+    import { getStats, incrementViews } from './firebase.js';
     document.addEventListener('DOMContentLoaded', async () => {
       const tableBody = document.getElementById('riddleList');
       try {
