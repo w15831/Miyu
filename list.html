@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           console.log("處理題目：", r);
           let stats = { views: '-', corrects: '-' };
 try {
-  await incrementViews(r.id);
+  
   stats = await getStats(r.id);
 } catch (e) {
   console.warn(`無法取得第 ${r.id} 題的統計資料：${e.message}`);
