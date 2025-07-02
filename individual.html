@@ -29,18 +29,26 @@
 
       await incrementViews(id);
     });
+window.checkAnswer = () => {
+  const input = document.getElementById('answerInput').value.trim();
+  if (!currentRiddle) return;
 
-    window.checkAnswer = () => {
-      const input = document.getElementById('answerInput').value.trim();
-      if (!currentRiddle) return;
-      const answers = currentRiddle.acceptableAnswers.map(a => a.trim());
-     if (answers.includes(input)) {
-     if (!isNaN(id)) incrementCorrects(id);
+  const answers = currentRiddle.acceptableAnswers.map(a => a.trim());
+  const id = +new URLSearchParams(location.search).get('no');
+
+  if (answers.includes(input)) {
+    if (!isNaN(id)) {
+      incrementCorrects(id).then(() => {
         location.href = `success.html?no=${id}`;
-      } else {
-        location.href = `fail.html?no=${id}`;
-      }
-    };
+      });
+    } else {
+      location.href = `success.html?no=${id}`;
+    }
+  } else {
+    location.href = `fail.html?no=${id}`;
+  }
+};
+
   </script>
   <style>
     body {
