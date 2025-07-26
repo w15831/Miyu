@@ -12,8 +12,9 @@
         const r = data.find(item => item.id == id);
         document.getElementById('answer').innerHTML = `<h2>謎底：</h2><p>${r.answer}</p>`;
         document.getElementById('explanation').innerHTML = `<h2>解析：</h2><p>${r.explanation.replace(/\\n/g, '<br>')}</p>`;
-        // 設定分享按鈕連結
-        const encodedUrl = encodeURIComponent(location.origin + '/' + questionUrl);
+
+        // ✅ 使用 URL() 建立完整網址（比字串拼接更可靠）
+        const encodedUrl = encodeURIComponent(new URL(questionUrl, location.href).href);
         document.getElementById('shareBtn').onclick = () => {
           location.href = `share.html?url=${encodedUrl}`;
         };
