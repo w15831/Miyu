@@ -5,53 +5,83 @@
   <title>謎底與解析</title>
   <script type="module">
     const id = new URLSearchParams(location.search).get('no');
+    const questionUrl = `individual.html?no=${id}`;
     fetch('只醉今謎.json')
       .then(res => res.json())
       .then(data => {
         const r = data.find(item => item.id == id);
         document.getElementById('answer').innerHTML = `<h2>謎底：</h2><p>${r.answer}</p>`;
         document.getElementById('explanation').innerHTML = `<h2>解析：</h2><p>${r.explanation.replace(/\\n/g, '<br>')}</p>`;
+        // 設定分享按鈕連結
+        const encodedUrl = encodeURIComponent(location.origin + '/' + questionUrl);
+        document.getElementById('shareBtn').onclick = () => {
+          location.href = `share.html?url=${encodedUrl}`;
+        };
       });
   </script>
   <style>
     body {
-  font-family: sans-serif;
-  margin: 2em 10%;
-  font-size: 28px;
-  line-height: 1.6;
-  text-align: left;
-}
+      font-family: sans-serif;
+      margin: 2em 10%;
+      font-size: 28px;
+      line-height: 1.6;
+      text-align: left;
+    }
 
-h2 {
-  font-size: 28px;
-  margin-bottom: 0.5em;
-}
+    h2 {
+      font-size: 28px;
+      margin-bottom: 0.5em;
+    }
 
-.answer {
-  font-size: 28px;
-  color: darkgreen;
-  margin-bottom: 1em;
-}
+    .answer {
+      font-size: 28px;
+      color: darkgreen;
+      margin-bottom: 1em;
+    }
 
-.explanation {
-  font-size: 28px;
-  color: #333;
-  white-space: pre-line; /* 保留 JSON 換行符號 */
-}
+    .explanation {
+      font-size: 28px;
+      color: #333;
+      white-space: pre-line;
+    }
 
-a {
-  display: inline-block;
-  margin-top: 2em;
-  font-size: 28px;
-  text-decoration: none;
-  color: purple;
-}
+    a {
+      display: inline-block;
+      margin-top: 2em;
+      font-size: 28px;
+      text-decoration: none;
+      color: purple;
+    }
 
+    #shareBtn {
+      margin-top: 2em;
+      padding: 0.5em 1em;
+      font-size: 24px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    #shareBtn:hover {
+      background-color: #1976d2;
+    }
   </style>
 </head>
 <body>
   <div id="answer">載入中...</div>
   <div id="explanation"></div>
-  <a href="index.html">🏠 回首頁</a>
+
+  <!-- 分享按鈕 -->
+  <div>
+    <button id="shareBtn">題目分享給朋友猜！</button>
+  </div>
+
+  <!-- 留一點空隙再放回首頁 -->
+  <div style="margin-top: 2em;">
+    <a href="index.html">🏠 回首頁</a>
+  </div>
 </body>
 </html>
