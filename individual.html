@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -29,26 +28,32 @@
 
       await incrementViews(id);
     });
-window.checkAnswer = () => {
-  const input = document.getElementById('answerInput').value.trim();
-  if (!currentRiddle) return;
 
-  const answers = currentRiddle.acceptableAnswers.map(a => a.trim());
-  const id = +new URLSearchParams(location.search).get('no');
+    window.checkAnswer = () => {
+      const input = document.getElementById('answerInput').value.trim();
+      if (!currentRiddle) return;
 
-  if (answers.includes(input)) {
-    if (!isNaN(id)) {
-      incrementCorrects(id).then(() => {
-        location.href = `success.html?no=${id}`;
-      });
-    } else {
-      location.href = `success.html?no=${id}`;
-    }
-  } else {
-    location.href = `fail.html?no=${id}`;
-  }
-};
+      const answers = currentRiddle.acceptableAnswers.map(a => a.trim());
+      const id = +new URLSearchParams(location.search).get('no');
 
+      if (answers.includes(input)) {
+        if (!isNaN(id)) {
+          incrementCorrects(id).then(() => {
+            location.href = `success.html?no=${id}`;
+          });
+        } else {
+          location.href = `success.html?no=${id}`;
+        }
+      } else {
+        location.href = `fail.html?no=${id}`;
+      }
+    };
+
+    // 分享功能
+    window.goToShare = () => {
+      const shareUrl = encodeURIComponent(window.location.href);
+      window.location.href = `share.html?url=${shareUrl}`;
+    };
   </script>
   <style>
     body {
@@ -87,14 +92,33 @@ window.checkAnswer = () => {
       margin: 0 0.5em;
       font-size: 1.2em;
     }
+    /* 分享按鈕額外樣式 */
+    #shareButton {
+      margin-top: 1em;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5em 1em;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    #shareButton:hover {
+      background-color: #1976d2;
+    }
   </style>
 </head>
 <body>
   <div id="riddleId" style="font-size: 24px; font-weight: bold; margin-bottom: 1em;"></div>
   <div id="riddle">載入中...</div>
+
+  <!-- 分享按鈕區塊 -->
+  <button id="shareButton" onclick="goToShare()">📣 分享給朋友一起猜！</button>
+
   <input type="text" id="answerInput" placeholder="請輸入答案">
   <br>
   <button onclick="checkAnswer()">送出</button>
+
   <div class="nav">
     <a id="hint1">💡 提示1</a>
     <a id="hint2">💡 提示2</a><br><br>
