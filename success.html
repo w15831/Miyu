@@ -26,21 +26,25 @@
   </style>
 </head>
 <body>
-  <div id="riddleId">#</div>
-<script>
-  const riddleNo = new URLSearchParams(location.search).get('no');
-  document.getElementById("riddleId").textContent = `#${riddleNo}`;
-</script>
-  <h2>🎉 恭喜！答對了！</h2>
-<a id="answerLink" href="#">✅ 看謎底與解析</a>
-<a href="index.html">🏠 回首頁</a>
+  <div id="riddleId" style="font-size: 36px; font-weight: bold; margin-top: 1em;"></div>
 
-<script>
-  const no = new URLSearchParams(location.search).get('no');
-  if (no) {
-    document.getElementById('answerLink').href = `answers.html?no=${no}`;
-  }
-</script>
+  <h2>🎉 恭喜答對了！太厲害啦！</h2>
+  <button onclick="brag()">🚀 炫耀一下</button><br>
+  <a id="answerLink" href="#">✅ 看謎底與解析</a>
+  <a href="index.html">🏠 回首頁</a>
 
+  <script>
+    const riddleNo = new URLSearchParams(location.search).get('no');
+    document.getElementById("riddleId").textContent = `#${riddleNo}`;
+
+    function brag() {
+      const encodedUrl = encodeURIComponent(new URL('individual.html?no=' + riddleNo, location.href).href);
+      window.open(`brag.html?url=${encodedUrl}`, '_blank');
+    }
+
+    if (riddleNo) {
+      document.getElementById('answerLink').href = `answers.html?no=${riddleNo}`;
+    }
+  </script>
 </body>
 </html>
