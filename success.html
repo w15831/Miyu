@@ -45,10 +45,11 @@
     document.getElementById('answerLink').href = `answers.html?no=${riddleNo}`;
   }
 
-  function brag() {
-    const encodedUrl = encodeURIComponent(new URL('individual.html?no=' + riddleNo, location.href).href);
-    window.open(`brag.html?url=${encodedUrl}`, '_blank');
-  }
+function brag() {
+  const riddleUrl = `${window.location.origin}/individual.html?no=${riddleNo}`;
+  const encodedUrl = encodeURIComponent(riddleUrl);
+  window.open(`brag.html?url=${encodedUrl}`, '_blank');
+}
 
   if (!isTest && riddleNo) {
     incrementCorrects(Number(riddleNo));
