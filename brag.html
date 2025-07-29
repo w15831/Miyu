@@ -14,6 +14,11 @@
       font-size: 36px;
       color: #d84315;
     }
+    #riddleId {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 1em;
+    }
     #shareText {
       font-size: 24px;
       margin: 30px 0;
@@ -59,8 +64,8 @@
   </style>
 </head>
 <body>
-  <div id="riddleId">#</div>
 
+  <div id="riddleId"></div>
   <h1>嘿！這一題我答對了！你要不要試試看？</h1>
   <div id="shareText"></div>
   <br>
@@ -71,38 +76,38 @@
   <div id="copyNotice">✅ 已複製到剪貼簿！</div>
 
   <script>
-    const riddleNo = new URLSearchParams(location.search).get('no');
-  document.getElementById("riddleId").textContent = `#${riddleNo}`;
-    
-  const urlParams = new URLSearchParams(window.location.search);
-  let sharedUrl = decodeURIComponent(urlParams.get('url') || '');
+    const urlParams = new URLSearchParams(window.location.search);
+    let sharedUrl = decodeURIComponent(urlParams.get('url') || '');
 
-  // 如果傳入的是相對路徑，加上完整網址
-  if (!sharedUrl.startsWith('http')) {
-    sharedUrl = window.location.origin + '/' + sharedUrl;
-  }
+    if (!sharedUrl.startsWith('http')) {
+      sharedUrl = window.location.origin + '/' + sharedUrl;
+    }
 
-  const shareText = `嘿！這一題我答對了！你要不要試試看？\n${sharedUrl}`;
-  document.getElementById("shareText").innerText = shareText;
+    const shareText = `嘿！這一題我答對了！你要不要試試看？\n${sharedUrl}`;
+    document.getElementById("shareText").innerText = shareText;
 
-  function copyShare() {
-    navigator.clipboard.writeText(shareText).then(() => {
-      const notice = document.getElementById("copyNotice");
-      notice.style.display = "block";
-      setTimeout(() => {
-        notice.style.display = "none";
-      }, 2000);
-    });
-  }
+    const urlObj = new URL(sharedUrl);
+    const riddleNo = urlObj.searchParams.get('no');
+    document.getElementById("riddleId").textContent = `#${riddleNo}`;
 
-  function goBack() {
-    window.location.href = sharedUrl;
-  }
+    function copyShare() {
+      navigator.clipboard.writeText(shareText).then(() => {
+        const notice = document.getElementById("copyNotice");
+        notice.style.display = "block";
+        setTimeout(() => {
+          notice.style.display = "none";
+        }, 2000);
+      });
+    }
 
-  function goHome() {
-    window.location.href = "index.html";
-  }
-</script>
+    function goBack() {
+      window.location.href = sharedUrl;
+    }
+
+    function goHome() {
+      window.location.href = "index.html";
+    }
+  </script>
 
 </body>
 </html>
