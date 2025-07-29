@@ -26,7 +26,12 @@
   </style>
 </head>
 <body>
-  <div id="riddleId">#</div>
+<div id="riddleId">#</div>
+<script>
+  const riddleNo = new URLSearchParams(location.search).get('no');
+  document.getElementById("riddleId").textContent = `#${riddleNo}`;
+</script>
+  
   <h2>❌ 不對哦，再試一次！</h2>
   <!-- 修改後：先放一個沒有指定連結的 a 標籤 -->
 <a id="answerLink" href="#">看謎底與解析</a>
