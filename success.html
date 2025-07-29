@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>答對了！</title>
   <style>
     body {
@@ -26,36 +26,25 @@
   </style>
 </head>
 <body>
-
-<script type="module">
-  import { incrementCorrects } from './firebase.js';
-
-  const riddleNo = new URLSearchParams(location.search).get('no');
-  const isTest = new URLSearchParams(location.search).get('test') === 'true';
-
-  document.getElementById("riddleId").textContent = `#${riddleNo}`;
-
-  if (riddleNo) {
-    document.getElementById('answerLink').href = `answers.html?no=${riddleNo}`;
-  }
-
-function brag() {
-  const riddleUrl = `${window.location.origin}/individual.html?no=${riddleNo}`;
-  const encodedUrl = encodeURIComponent(riddleUrl);
-  window.open(`brag.html?url=${encodedUrl}`, '_blank');
-}
-
-  if (!isTest && riddleNo) {
-    incrementCorrects(Number(riddleNo));
-  }
-</script>
-
- <div id="riddleId" style="font-size: 36px; font-weight: bold; margin-top: 1em;"></div>
-
+  <div id="riddleId" style="font-size: 36px; font-weight: bold; margin-top: 1em;"></div>
   <h2>🎉 恭喜答對了！太厲害啦！</h2>
   <button onclick="brag()">🚀 炫耀一下</button><br>
   <a id="answerLink" href="#">✅ 看謎底與解析</a>
   <a href="index.html">🏠 回首頁</a>
-  
+
+  <script>
+    const riddleNo = new URLSearchParams(location.search).get('no');
+    document.getElementById("riddleId").textContent = `#${riddleNo}`;
+
+    function brag() {
+      const riddleUrl = `${window.location.origin}/individual.html?no=${riddleNo}`;
+      const encodedUrl = encodeURIComponent(riddleUrl);
+      window.open(`brag.html?url=${encodedUrl}`, '_blank');
+    }
+
+    if (riddleNo) {
+      document.getElementById('answerLink').href = `answers.html?no=${riddleNo}`;
+    }
+  </script>
 </body>
 </html>
