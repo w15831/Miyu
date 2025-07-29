@@ -76,18 +76,17 @@
   <div id="copyNotice">✅ 已複製到剪貼簿！</div>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    let sharedUrl = decodeURIComponent(urlParams.get('url') || '');
-console.log('sharedUrl:', sharedUrl);
+  const urlParams = new URLSearchParams(window.location.search);
+  let sharedUrl = decodeURIComponent(urlParams.get('url') || '');
+  console.log('原始 sharedUrl:', sharedUrl);
 
-if (!sharedUrl.startsWith('http')) {
-  const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
-  sharedUrl = window.location.origin + basePath + '/' + sharedUrl;
-}
+  try {
+    const urlObj = new URL(sharedUrl, window.location.href); // 自動處理相對與絕對網址
+    sharedUrl = urlObj.href; // 確保是完整網址
+
     const shareText = `嘿！這一題我答對了！你要不要試試看？\n${sharedUrl}`;
     document.getElementById("shareText").innerText = shareText;
 
-    const urlObj = new URL(sharedUrl);
     const riddleNo = urlObj.searchParams.get('no');
     document.getElementById("riddleId").textContent = `#${riddleNo}`;
 
@@ -108,7 +107,12 @@ if (!sharedUrl.startsWith('http')) {
     function goHome() {
       window.location.href = "index.html";
     }
-  </script>
+
+  } catch (err) {
+    console.error('URL 解析錯誤：', err);
+    document.getElementById("shareText").innerText = "⚠️ 錯誤：無法解析分享網址";
+  }
+</script>
 
 </body>
 </html>
