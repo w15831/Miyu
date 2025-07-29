@@ -37,9 +37,9 @@
     document.getElementById("riddleId").textContent = `#${riddleNo}`;
 
     function brag() {
-      const riddleUrl = `${window.location.origin}/individual.html?no=${riddleNo}`;
-      const encodedUrl = encodeURIComponent(riddleUrl);
-      window.open(`brag.html?url=${encodedUrl}`, '_blank');
+     const currentUrl = window.location.href;
+     const bragUrl = `brag.html?url=${encodeURIComponent(currentUrl)}`;
+     window.location.href = bragUrl;
     }
 
     if (riddleNo) {
