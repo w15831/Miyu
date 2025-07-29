@@ -79,8 +79,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     let sharedUrl = decodeURIComponent(urlParams.get('url') || '');
 console.log('sharedUrl:', sharedUrl);
-document.body.innerHTML += `<div style="color:red;">sharedUrl: ${sharedUrl}</div>`;
-    
+
     if (!sharedUrl.startsWith('http')) {
       sharedUrl = window.location.origin + '/' + sharedUrl;
     }
