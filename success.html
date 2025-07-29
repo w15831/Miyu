@@ -33,18 +33,27 @@
   <a id="answerLink" href="#">✅ 看謎底與解析</a>
   <a href="index.html">🏠 回首頁</a>
 
-  <script>
-    const riddleNo = new URLSearchParams(location.search).get('no');
-    document.getElementById("riddleId").textContent = `#${riddleNo}`;
+<script type="module">
+  import { incrementCorrects } from './firebase.js';
 
-    function brag() {
-      const encodedUrl = encodeURIComponent(new URL('individual.html?no=' + riddleNo, location.href).href);
-      window.open(`brag.html?url=${encodedUrl}`, '_blank');
-    }
+  const riddleNo = new URLSearchParams(location.search).get('no');
+  const isTest = new URLSearchParams(location.search).get('test') === 'true';
 
-    if (riddleNo) {
-      document.getElementById('answerLink').href = `answers.html?no=${riddleNo}`;
-    }
-  </script>
+  document.getElementById("riddleId").textContent = `#${riddleNo}`;
+
+  if (riddleNo) {
+    document.getElementById('answerLink').href = `answers.html?no=${riddleNo}`;
+  }
+
+  function brag() {
+    const encodedUrl = encodeURIComponent(new URL('individual.html?no=' + riddleNo, location.href).href);
+    window.open(`brag.html?url=${encodedUrl}`, '_blank');
+  }
+
+  if (!isTest && riddleNo) {
+    incrementCorrects(Number(riddleNo));
+  }
+</script>
+
 </body>
 </html>
