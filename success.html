@@ -37,9 +37,10 @@
     document.getElementById("riddleId").textContent = `#${riddleNo}`;
 
     function brag() {
-     const currentUrl = window.location.href;
-     const bragUrl = `brag.html?url=${encodeURIComponent(currentUrl)}`;
-     window.location.href = bragUrl;
+    const riddleNo = new URLSearchParams(window.location.search).get('no');
+    const riddleUrl = `individual.html?no=${no}`;
+    const bragUrl = `brag.html?url=${encodeURIComponent(riddleUrl)}`;
+    window.location.href = bragUrl;
     }
 
     if (riddleNo) {
