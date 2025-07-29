@@ -70,7 +70,7 @@
   <div id="shareText"></div>
   <br>
   <button onclick="copyShare()">📋 一鍵複製</button>
-  <button onclick="goBack()">🔁 看原題</button>
+  <button onclick="goBack()">🔁 重溫原題</button>
   <button onclick="goHome()">🏠 回首頁</button>
 
   <div id="copyNotice">✅ 已複製到剪貼簿！</div>
@@ -80,10 +80,10 @@
     let sharedUrl = decodeURIComponent(urlParams.get('url') || '');
 console.log('sharedUrl:', sharedUrl);
 
-    if (!sharedUrl.startsWith('http')) {
-      sharedUrl = window.location.origin + '/' + sharedUrl;
-    }
-
+if (!sharedUrl.startsWith('http')) {
+  const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
+  sharedUrl = window.location.origin + basePath + '/' + sharedUrl;
+}
     const shareText = `嘿！這一題我答對了！你要不要試試看？\n${sharedUrl}`;
     document.getElementById("shareText").innerText = shareText;
 
