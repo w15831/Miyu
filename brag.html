@@ -72,28 +72,35 @@
   <div id="copyNotice">✅ 已複製到剪貼簿！</div>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const sharedUrl = decodeURIComponent(urlParams.get('url'));
-    const shareText = `嘿！這一題我答對了！你要不要試試看？\n${sharedUrl}`;
-    document.getElementById("shareText").innerText = shareText;
+  const urlParams = new URLSearchParams(window.location.search);
+  let sharedUrl = decodeURIComponent(urlParams.get('url') || '');
 
-    function copyShare() {
-      navigator.clipboard.writeText(shareText).then(() => {
-        const notice = document.getElementById("copyNotice");
-        notice.style.display = "block";
-        setTimeout(() => {
-          notice.style.display = "none";
-        }, 2000);
-      });
-    }
+  // 如果傳入的是相對路徑，加上完整網址
+  if (!sharedUrl.startsWith('http')) {
+    sharedUrl = window.location.origin + '/' + sharedUrl;
+  }
 
-    function goBack() {
-      window.location.href = sharedUrl;
-    }
+  const shareText = `嘿！這一題我答對了！你要不要試試看？\n${sharedUrl}`;
+  document.getElementById("shareText").innerText = shareText;
 
-    function goHome() {
-      window.location.href = "index.html";
-    }
-  </script>
+  function copyShare() {
+    navigator.clipboard.writeText(shareText).then(() => {
+      const notice = document.getElementById("copyNotice");
+      notice.style.display = "block";
+      setTimeout(() => {
+        notice.style.display = "none";
+      }, 2000);
+    });
+  }
+
+  function goBack() {
+    window.location.href = sharedUrl;
+  }
+
+  function goHome() {
+    window.location.href = "index.html";
+  }
+</script>
+
 </body>
 </html>
