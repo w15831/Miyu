@@ -38,7 +38,7 @@
 
     function brag() {
     const riddleNo = new URLSearchParams(window.location.search).get('no');
-    const riddleUrl = `individual.html?no=${no}`;
+    const riddleUrl = `individual.html?no=${riddleNo}`;
     const bragUrl = `brag.html?url=${encodeURIComponent(riddleUrl)}`;
     window.location.href = bragUrl;
     }
