@@ -59,6 +59,8 @@
   </style>
 </head>
 <body>
+  <div id="riddleId">#</div>
+
   <h1>嘿！這一題我答對了！你要不要試試看？</h1>
   <div id="shareText"></div>
   <br>
@@ -69,6 +71,9 @@
   <div id="copyNotice">✅ 已複製到剪貼簿！</div>
 
   <script>
+    const riddleNo = new URLSearchParams(location.search).get('no');
+  document.getElementById("riddleId").textContent = `#${riddleNo}`;
+    
   const urlParams = new URLSearchParams(window.location.search);
   let sharedUrl = decodeURIComponent(urlParams.get('url') || '');
 
