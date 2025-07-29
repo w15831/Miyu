@@ -26,6 +26,11 @@
   </style>
 </head>
 <body>
+  <div id="riddleId">#</div>
+<script>
+  const riddleNo = new URLSearchParams(location.search).get('no');
+  document.getElementById("riddleId").textContent = `#${riddleNo}`;
+</script>
   <h2>🎉 恭喜！答對了！</h2>
 <a id="answerLink" href="#">✅ 看謎底與解析</a>
 <a href="index.html">🏠 回首頁</a>
